@@ -6,8 +6,8 @@ class NewsViewModel {
 
   final _repo = NewsRepository();
 
-  Future<NewsChannalHeadlinesModel> fetchNewsChannalHeadlinesApi() async {
-    final response = await _repo.fetchNewsChannalHeadlinesApi();
+  Future<NewsChannalHeadlinesModel> fetchNewsChannalHeadlinesApi(String channelName) async {
+    final response = await _repo.fetchNewsChannalHeadlinesApi(channelName);
     return response;
   }
 

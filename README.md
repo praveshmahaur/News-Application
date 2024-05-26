@@ -1,4 +1,4 @@
-# top_news
+# NewsHeadline NewApp
 
 A new Flutter project.
 

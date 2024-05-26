@@ -9,10 +9,11 @@ import '../models/news_channal_headlines_model.dart';
 
 class NewsRepository{
 
-  Future<NewsChannalHeadlinesModel> fetchNewsChannalHeadlinesApi() async{
-
-    String url= 'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=44b70f9076d9421684605ea51020cd36';
-
+  Future<NewsChannalHeadlinesModel> fetchNewsChannalHeadlinesApi(String channelName) async{
+    //print("fetch data $channelName");
+    //String url= 'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=44b70f9076d9421684605ea51020cd36';
+    String url= 'https://newsapi.org/v2/top-headlines?sources=${channelName}&apiKey=44b70f9076d9421684605ea51020cd36';
+    log(url);
     final response = await http.get(Uri.parse(url));
     if (kDebugMode) {
       log(response.body);
@@ -30,6 +31,7 @@ class NewsRepository{
 
     String url= 'https://newsapi.org/v2/top-headlines?q=${category}&apiKey=44b70f9076d9421684605ea51020cd36';
 
+    print(url);
     final response = await http.get(Uri.parse(url));
     if (kDebugMode) {
       log(response.body);
