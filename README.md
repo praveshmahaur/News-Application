@@ -1,4 +1,4 @@
-# NewsHeadline NewApp
+# NewsHeadline NewsApp
 
 A new Flutter project.
 
