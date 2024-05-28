@@ -1,16 +1,17 @@
 # NewsHeadline NewsApp
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### Features
 
-A few resources to get you started if this is your first Flutter project:
+. User Authentication: The app supports user registration and authentication using Firebase Authentication.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+. Real-time Data Sync: To-do tasks are synchronized in real-time across multiple devices.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+. Add and Edit Tasks: Users can add new tasks and edit existing ones with ease.
+
+. Mark as Complete: Tasks can be marked as complete, and the app provides a visual indication for completed tasks.
+
+. Delete Tasks: Users can delete tasks they no longer need.
+
+. Task Categories: Tasks can be organized into different categories or projects.

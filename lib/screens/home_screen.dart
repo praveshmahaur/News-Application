@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:top_news/screens/category_screen.dart';
+import 'package:top_news/screens/details_screen.dart';
 import 'package:top_news/view_model/news_view_model.dart';
 import '../models/categories_news_model.dart';
 import '../models/news_channal_headlines_model.dart';
@@ -107,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   name = 'bbc-news';
                 }
                 if (FilterList.hackerNews== item) {
-                  name = 'ary-news';
+                  name = 'hacker-news';
                 }
                 if (FilterList.bbcsport== item) {
                   name = 'bbc-sport';
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         children: [
           Container(
-            height: height * .4,
+            height: height * .3,
             width: width,
             decoration: const BoxDecoration(
                 color: Colors.red,
@@ -172,54 +173,67 @@ class _HomeScreenState extends State<HomeScreen> {
                         DateTime dateTime = DateTime.parse(snapshot
                             .data!.articles![index].publishedAt
                             .toString());
-                        return SizedBox(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                            Container(
-                              alignment: Alignment.bottomCenter,
-                              padding: EdgeInsets.only(left:15,bottom: 5),
-                              height: height * 0.08,
-                              child: Container(
-                                width: width * 0.72,
-                                child: Text(
-                                  snapshot
-                                      .data!.articles![index].title
-                                      .toString(),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                            )
-                              ,
+                        return GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                DetailsScreen(
+                                 source: snapshot.data!.articles![index].source.toString(),
+                                 description: snapshot.data!.articles![index].description.toString(),
+                                 author: snapshot.data!.articles![index].author.toString(),
+                                 content: snapshot.data!.articles![index].content.toString(),
+                                 newsDate: snapshot.data!.articles![index].publishedAt.toString(),
+                                 newsImage: snapshot.data!.articles![index].urlToImage.toString(),
+                                 newsTitle: snapshot.data!.articles![index].title.toString()
+                            )));
+                          },
+                          child: SizedBox(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                               Container(
-                                height: height * 0.3,
-                                width: width * 0.99,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: height * 0.01),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: CachedNetworkImage(
-                                    imageUrl: snapshot
-                                        .data!.articles![index].urlToImage
+                                alignment: Alignment.bottomCenter,
+                                padding: EdgeInsets.only(left:15,bottom: 5),
+                                height: height * 0.07,
+                                child: Container(
+                                  width: width * 0.72,
+                                  child: Text(
+                                    snapshot
+                                        .data!.articles![index].title
                                         .toString(),
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => Container(
-                                      child: spinkit2,
-                                    ),
-                                    errorWidget: (context, url, error) => Icon(
-                                      Icons.error_outline,
-                                      color: Colors.red,
-                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700),
                                   ),
                                 ),
                               ),
+                                Container(
+                                  height: height * 0.22,
+                                  width: width * 0.99,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: height * 0.01),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                      imageUrl: snapshot
+                                          .data!.articles![index].urlToImage
+                                          .toString(),
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Container(
+                                        child: spinkit2,
+                                      ),
+                                      errorWidget: (context, url, error) => Icon(
+                                        Icons.error_outline,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ),
 
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       });
@@ -228,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            height: height * 0.5,
+            height: height * 0.7,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: FutureBuilder<CategoriesNewsModel>(
