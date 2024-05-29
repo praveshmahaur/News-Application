@@ -12,40 +12,44 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 3),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder:
-          (context)=>HomeScreen() ));
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final height=MediaQuery.sizeOf(context).height * 1;
-    final width=MediaQuery.sizeOf(context).width * 1;
+    final height = MediaQuery.sizeOf(context).height * 1;
     return Scaffold(
-      backgroundColor: Colors.red,
-      body:Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-           Transform.rotate(
-             angle: -10 * (3.1415926535897932 / 180),
-             child: Image.asset('images/newsbanner.png'),
-           ),
-          SizedBox(height: height * 0.04,),
-          Text("NewsHeadline",style: GoogleFonts.anton(letterSpacing: .5,
-              color: Colors.white,fontSize:20),),
-          SizedBox(height: height * 0.04,),
-          const SpinKitThreeBounce(
-            color: Colors.white,
-            size: 40,
-          )
-        ],
-      )
-    );
+        backgroundColor: Colors.red,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Transform.rotate(
+              angle: -10 * (3.1415926535897932 / 180),
+              child: Image.asset('images/newsbanner.png'),
+            ),
+            SizedBox(
+              height: height * 0.04,
+            ),
+            Text(
+              "NewsHeadline",
+              style: GoogleFonts.anton(
+                  letterSpacing: .5, color: Colors.white, fontSize: 20),
+            ),
+            SizedBox(
+              height: height * 0.04,
+            ),
+            const SpinKitThreeBounce(
+              color: Colors.white,
+              size: 40,
+            )
+          ],
+        ));
   }
 }

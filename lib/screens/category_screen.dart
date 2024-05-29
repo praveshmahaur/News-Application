@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:top_news/models/categories_news_model.dart';
 import '../view_model/news_view_model.dart';
+import 'details_screen.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -58,7 +59,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 color: categoryName == CategoriesList[index]
-                                    ? Colors.blue
+                                    ? Colors.red
                                     : Colors.grey),
                             child: Padding(
                               padding:
@@ -68,11 +69,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 CategoriesList[index].toString(),
                                 style: GoogleFonts.poppins(
                                     fontSize: 15, color: Colors.white),
-                                // style: TextStyle(
-                                //   decoration: TextDecoration.underline,
-                                //   decorationColor: Colors.redAccent,
-                                //   decorationThickness: 5.0,
-                                // )
                               )),
                             ),
                           ),
@@ -102,72 +98,100 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               .toString());
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 15.0),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: CachedNetworkImage(
-                                    imageUrl: snapshot
-                                        .data!.articles![index].urlToImage
-                                        .toString(),
-                                    fit: BoxFit.cover,
-                                    height: height * 0.19,
-                                    width: width * 0.3,
-                                    placeholder: (context, url) => Container(
-                                      child: spinkit2,
-                                    ),
-                                    errorWidget: (context, url, error) =>const Icon(
-                                      Icons.error_outline,
-                                      color: Colors.red,
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailsScreen(
+                                            source: snapshot
+                                                .data!.articles![index].source!.name
+                                                .toString(),
+                                            description: snapshot
+                                                .data!.articles![index].description
+                                                .toString(),
+                                            author: snapshot.data!.articles![index].author
+                                                .toString(),
+                                            content: snapshot.data!.articles![index].content
+                                                .toString(),
+                                            newsDate: snapshot
+                                                .data!.articles![index].publishedAt
+                                                .toString(),
+                                            newsImage: snapshot
+                                                .data!.articles![index].urlToImage
+                                                .toString(),
+                                            newsTitle: snapshot.data!.articles![index].title.toString())));
+                              },
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                      imageUrl: snapshot
+                                          .data!.articles![index].urlToImage
+                                          .toString(),
+                                      fit: BoxFit.cover,
+                                      height: height * 0.19,
+                                      width: width * 0.3,
+                                      placeholder: (context, url) => Container(
+                                        child: SpinKitFadingCircle(
+                                          color: Colors.amber,
+                                          size: 50,
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>const Icon(
+                                        Icons.error_outline,
+                                        color: Colors.red,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                    child: Container(
-                                  height: height * 0.18,
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        snapshot.data!.articles![index].title
-                                            .toString(),
-                                        maxLines: 3,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      Text(
-                                        snapshot
-                                            .data!.articles![index].source!.name
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Spacer(),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            format.format(dateTime),
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                color: Colors.black38,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )),
-                              ],
+                                  Expanded(
+                                      child: Container(
+                                    height: height * 0.18,
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          snapshot.data!.articles![index].title
+                                              .toString(),
+                                          maxLines: 3,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 15,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          snapshot
+                                              .data!.articles![index].source!.name
+                                              .toString(),
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 13,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Spacer(),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              format.format(dateTime),
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  color: Colors.black38,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                                ],
+                              ),
                             ),
                           );
                         });
@@ -182,7 +206,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 }
 
-const spinkit2 = SpinKitFadingCircle(
-  color: Colors.amber,
-  size: 50,
-);
+// const spinkit2 = SpinKitFadingCircle(
+//   color: Colors.amber,
+//   size: 50,
+// );

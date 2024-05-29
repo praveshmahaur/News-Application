@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,12 +17,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-enum FilterList {
-  thehindu,
-  bbcNews,
-  bbcsport,
-  hackerNews
-}
+enum FilterList { thehindu, bbcNews, bbcsport, hackerNews }
 
 class _HomeScreenState extends State<HomeScreen> {
   FilterList? selectedMenu;
@@ -41,21 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-                decoration: BoxDecoration(color: Colors.red),
+                decoration: const BoxDecoration(color: Colors.red),
                 child: Text(
                   "NewsHeadline",
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                        fontSize:20,
-                        fontWeight: FontWeight.w600,
-                        ),
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
                 )),
             InkWell(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CategoryScreen()));
+                          builder: (context) => const CategoryScreen()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -63,13 +57,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Category Wise News",
+                        Text(
+                          "Category Wise News",
                           style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                          ),),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         const FaIcon(
-                          FontAwesomeIcons.arrowRight, // Choose the icon you want
+                          FontAwesomeIcons
+                              .arrowRight, // Choose the icon you want
                           size: 20, // Adjust the size as needed
                           color: Colors.red, // Choose the color you want
                         ),
@@ -99,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               initialValue: selectedMenu,
-              icon: Icon(
+              icon: const Icon(
                 Icons.more_vert,
                 color: Colors.black,
               ),
@@ -107,36 +104,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (FilterList.bbcNews == item) {
                   name = 'bbc-news';
                 }
-                if (FilterList.hackerNews== item) {
+                if (FilterList.hackerNews == item) {
                   name = 'hacker-news';
                 }
-                if (FilterList.bbcsport== item) {
+                if (FilterList.bbcsport == item) {
                   name = 'bbc-sport';
                 }
-                if (FilterList.thehindu== item) {
+                if (FilterList.thehindu == item) {
                   name = 'the-hindu';
                 }
 
-                print("check $name");
                 newsViewModel.fetchNewsChannalHeadlinesApi(name);
                 setState(() {
                   selectedMenu = item;
                 });
               },
               itemBuilder: (context) => <PopupMenuEntry<FilterList>>[
-                    PopupMenuItem<FilterList>(
+                    const PopupMenuItem<FilterList>(
                       value: FilterList.bbcNews,
                       child: Text("BBC News"),
                     ),
-                    PopupMenuItem<FilterList>(
+                    const PopupMenuItem<FilterList>(
                       value: FilterList.hackerNews,
                       child: Text("Hacker News"),
                     ),
-                    PopupMenuItem<FilterList>(
+                    const PopupMenuItem<FilterList>(
                       value: FilterList.bbcsport,
                       child: Text("BBC sport"),
                     ),
-                    PopupMenuItem<FilterList>(
+                    const PopupMenuItem<FilterList>(
                       value: FilterList.thehindu,
                       child: Text("The Hindu"),
                     ),
@@ -151,10 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: const BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),  // Circular bottom-left corner
-                  bottomRight: Radius.circular(15), // Circular bottom-right corner
-                )
-            ),
+                  bottomLeft:
+                      Radius.circular(15), // Circular bottom-left corner
+                  bottomRight:
+                      Radius.circular(15), // Circular bottom-right corner
+                )),
             child: FutureBuilder<NewsChannalHeadlinesModel>(
               future: newsViewModel.fetchNewsChannalHeadlinesApi(name),
               builder: (BuildContext context, snapshot) {
@@ -170,48 +167,59 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: snapshot.data!.articles!.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        DateTime dateTime = DateTime.parse(snapshot
-                            .data!.articles![index].publishedAt
-                            .toString());
+                        // DateTime dateTime = DateTime.parse(snapshot
+                        //     .data!.articles![index].publishedAt
+                        //     .toString());
                         return GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                DetailsScreen(
-                                 source: snapshot.data!.articles![index].source.toString(),
-                                 description: snapshot.data!.articles![index].description.toString(),
-                                 author: snapshot.data!.articles![index].author.toString(),
-                                 content: snapshot.data!.articles![index].content.toString(),
-                                 newsDate: snapshot.data!.articles![index].publishedAt.toString(),
-                                 newsImage: snapshot.data!.articles![index].urlToImage.toString(),
-                                 newsTitle: snapshot.data!.articles![index].title.toString()
-                            )));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailsScreen(
+                                        source: snapshot
+                                            .data!.articles![index].source!.name
+                                            .toString(),
+                                        description: snapshot
+                                            .data!.articles![index].description
+                                            .toString(),
+                                        author: snapshot.data!.articles![index].author
+                                            .toString(),
+                                        content: snapshot.data!.articles![index].content
+                                            .toString(),
+                                        newsDate: snapshot
+                                            .data!.articles![index].publishedAt
+                                            .toString(),
+                                        newsImage: snapshot
+                                            .data!.articles![index].urlToImage
+                                            .toString(),
+                                        newsTitle: snapshot.data!.articles![index].title.toString())));
                           },
                           child: SizedBox(
+                            // UP part-> ->
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                padding: EdgeInsets.only(left:15,bottom: 5),
-                                height: height * 0.07,
-                                child: Container(
-                                  width: width * 0.72,
-                                  child: Text(
-                                    snapshot
-                                        .data!.articles![index].title
-                                        .toString(),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w700),
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  padding: const EdgeInsets.only(left: 15, bottom: 5),
+                                  height: height * 0.07,
+                                  child: Container(
+                                    width: width * 0.72,
+                                    child: Text(
+                                      snapshot.data!.articles![index].title
+                                          .toString(),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w700),
+                                    ),
                                   ),
                                 ),
-                              ),
                                 Container(
                                   height: height * 0.22,
-                                  width: width * 0.99,
+                                  width: width * 0.95,
                                   padding: EdgeInsets.symmetric(
                                       horizontal: height * 0.01),
                                   child: ClipRRect(
@@ -221,17 +229,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .data!.articles![index].urlToImage
                                           .toString(),
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) => Container(
-                                        child: spinkit2,
+                                      placeholder: (context, url) => const SpinKitFadingCircle(
+                                        color: Colors.amber,
+                                        size: 50,
                                       ),
-                                      errorWidget: (context, url, error) => Icon(
-                                        Icons.error_outline,
-                                        color: Colors.red,
-                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "images/breakingNews.jpg"),
                                     ),
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
@@ -241,8 +248,9 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
+          //Down part-> ->
           Container(
-            height: height * 0.7,
+            height: height * 0.67,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: FutureBuilder<CategoriesNewsModel>(
@@ -266,73 +274,97 @@ class _HomeScreenState extends State<HomeScreen> {
                               .toString());
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 15.0),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: CachedNetworkImage(
-                                    imageUrl: snapshot
-                                        .data!.articles![index].urlToImage
-                                        .toString(),
-                                    fit: BoxFit.cover,
-                                    height: height * 0.19,
-                                    width: width * 0.3,
-                                    placeholder: (context, url) => Container(
-                                      child: spinkit2,
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(
-                                      Icons.error_outline,
-                                      color: Colors.red,
+                            child: GestureDetector(
+                              onTap:() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailsScreen(
+                                            source: snapshot
+                                                .data!.articles![index].source!.name
+                                                .toString(),
+                                            description: snapshot
+                                                .data!.articles![index].description
+                                                .toString(),
+                                            author: snapshot.data!.articles![index].author
+                                                .toString(),
+                                            content: snapshot.data!.articles![index].content
+                                                .toString(),
+                                            newsDate: snapshot
+                                                .data!.articles![index].publishedAt
+                                                .toString(),
+                                            newsImage: snapshot
+                                                .data!.articles![index].urlToImage
+                                                .toString(),
+                                            newsTitle: snapshot.data!.articles![index].title.toString())));
+                              },
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                      imageUrl: snapshot
+                                          .data!.articles![index].urlToImage
+                                          .toString(),
+                                      fit: BoxFit.cover,
+                                      height: height * 0.19,
+                                      width: width * 0.3,
+                                      placeholder: (context, url) => const SpinKitFadingCircle(
+                                        color: Colors.amber,
+                                        size: 50,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "images/breakingNewsDown.jpg"),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                    child: Container(
-                                  height: height * 0.18,
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        snapshot.data!.articles![index].title
-                                            .toString(),
-                                        maxLines: 3,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      Text(
-                                        snapshot
-                                            .data!.articles![index].source!.name
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Spacer(),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            format.format(dateTime),
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                color: Colors.black38,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )),
-                              ],
+                                  Expanded(
+                                      child: Container(
+                                    height: height * 0.18,
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          snapshot.data!.articles![index].title
+                                              .toString(),
+                                          maxLines: 3,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 15,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          snapshot
+                                              .data!.articles![index].source!.name
+                                              .toString(),
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 13,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        const Spacer(),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              format.format(dateTime),
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  color: Colors.black38,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                                ],
+                              ),
                             ),
                           );
                         });
@@ -346,8 +378,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-const spinkit2 = SpinKitFadingCircle(
-  color: Colors.amber,
-  size: 50,
-);
