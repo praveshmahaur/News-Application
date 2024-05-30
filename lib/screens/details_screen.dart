@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'category_screen.dart';
 
 class DetailsScreen extends StatefulWidget {
   final String newsImage,
