@@ -51,9 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       MaterialPageRoute(
                           builder: (context) => const CategoryScreen()));
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
+                child: Card(
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -61,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Category Wise News",
                           style: GoogleFonts.poppins(
                             fontSize: 18,
+                            color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           FontAwesomeIcons
                               .arrowRight, // Choose the icon you want
                           size: 20, // Adjust the size as needed
-                          color: Colors.red, // Choose the color you want
+                          color: Colors.white, // Choose the color you want
                         ),
                       ],
                     ),
