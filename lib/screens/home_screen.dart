@@ -102,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icons.more_vert,
                 color: Colors.black,
               ),
+              
               onSelected: (FilterList item) {
                 if (FilterList.bbcNews == item) {
                   name = 'bbc-news';
